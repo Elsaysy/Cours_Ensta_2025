@@ -18,9 +18,9 @@ Coller ici les infos *utiles* de lscpu.
 
   n            | MFlops
 ---------------|--------
-1024 (origine) |
-               |
-               |
+1023           | 873.185
+1024 (origine) | 212.4
+1025           | 825.117
                |
                |
 
