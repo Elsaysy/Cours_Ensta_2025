@@ -21,9 +21,6 @@ Coller ici les infos *utiles* de lscpu.
 1023           | 873.185
 1024 (origine) | 212.4
 1025           | 825.117
-               |
-               |
-
 
 Pour mesurer le temps de calcul du produit matrice-matrice, j'ai effectué des tests avec trois dimensions différentes. Voici les résultats observés :
 
