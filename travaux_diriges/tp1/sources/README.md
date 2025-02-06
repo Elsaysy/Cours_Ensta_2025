@@ -69,13 +69,12 @@ Ce phénomène s'explique par le comportement du cache :
 
 En revanche, les dimensions 1023 et 1025 évitent ces conflits systématiques, ce qui explique leurs meilleures performances.
 
-Cette observation illustre l'importance de la gestion du cache dans les performances des algorithmes de calcul matriciel, comme nous l'avons vu dans le cours.
-
 ### Permutation des boucles
 
-*Expliquer comment est compilé le code (ligne de make ou de gcc) : on aura besoin de savoir l'optim, les paramètres, etc. Par exemple :*
-
-`make TestProduct.exe && ./TestProduct.exe 1024`
+```
+g++ -O3 -march=native -fopenmp -o TestProductMatrix.exe TestProductMatrix.cpp ProdMatMat.cpp Matrix.cpp
+./TestProductMatrix.exe 1024
+```
 
 
   ordre           | time    | MFlops  | MFlops(n=2048)
@@ -90,7 +89,7 @@ k,j,i             | 0.30090 | 7136.81 |   4602.32
 
 Pour l'ordre des boucles (j,k,i) dans la multiplication matricielle :
 
-La meilleure performance (9804.6 MFlops) s'explique par l'accès optimal à la mémoire cache :
+La meilleure performance s'explique par l'accès optimal à la mémoire cache :
 
 1. La boucle interne sur i :
 - Accède aux éléments de C[i][j] en colonne
