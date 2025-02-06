@@ -88,7 +88,24 @@ j,k,i             | 0.21903 | 9804.60 |   6359.45
 k,j,i             | 0.30090 | 7136.81 |   4602.32
 
 
-*Discuter les résultats.*
+Pour l'ordre des boucles (j,k,i) dans la multiplication matricielle :
+
+La meilleure performance (9804.6 MFlops) s'explique par l'accès optimal à la mémoire cache :
+
+1. La boucle interne sur i :
+- Accède aux éléments de C[i][j] en colonne
+- Accède aux éléments de A[i][k] en colonne
+- B[k][j] reste constant et peut être gardé en registre
+
+2. La boucle du milieu sur k :
+- Permet de réutiliser B[k][j] qui est déjà en cache
+- Change la colonne de A à chaque itération
+
+3. La boucle externe sur j :
+- Change la colonne de B et C
+- Maximise la réutilisation du cache
+
+Cette organisation minimise les défauts de cache et optimise l'utilisation des registres du processeur.
 
 
 
