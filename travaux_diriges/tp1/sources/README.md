@@ -8,7 +8,30 @@
 *lscpu donne des infos utiles sur le processeur : nb core, taille de cache :*
 
 ```
-Coller ici les infos *utiles* de lscpu.
+Architecture:                        x86_64
+CPU op-mode(s):                      32-bit, 64-bit
+Byte Order:                          Little Endian
+Address sizes:                       39 bits physical, 48 bits virtual
+CPU(s):                              4
+On-line CPU(s) list:                 0-3
+Thread(s) per core:                  1
+Core(s) per socket:                  4
+Socket(s):                           1
+NUMA node(s):                        1
+Vendor ID:                           GenuineIntel
+CPU family:                          6
+Model:                               183
+Model name:                          13th Gen Intel(R) Core(TM) i9-13900HX
+Stepping:                            1
+CPU MHz:                             2419.200
+BogoMIPS:                            4838.40
+Hypervisor vendor:                   KVM
+Virtualization type:                 full
+L1d cache:                           192 KiB
+L1i cache:                           128 KiB
+L2 cache:                            8 MiB
+L3 cache:                            144 MiB
+NUMA node0 CPU(s):                   0-3
 ```
 
 
