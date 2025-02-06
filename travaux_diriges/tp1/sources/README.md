@@ -80,12 +80,12 @@ Cette observation illustre l'importance de la gestion du cache dans les performa
 
   ordre           | time    | MFlops  | MFlops(n=2048)
 ------------------|---------|---------|----------------
-i,j,k (origine)   | 2.73764 | 782.476 |
-j,i,k             |         |         |
-i,k,j             |         |         |
-k,i,j             |         |         |
-j,k,i             |         |         |
-k,j,i             |         |         |
+i,j,k (origine)   | 4.12097 | 521.112 |
+j,i,k             | 4.22567 | 508.199 |
+i,k,j             | 8.13349 | 264.030 |
+k,i,j             | 8.14009 | 263.816 |
+j,k,i             | 0.21903 | 9804.60 |
+k,j,i             | 0.30090 | 7136.81 |
 
 
 *Discuter les résultats.*
