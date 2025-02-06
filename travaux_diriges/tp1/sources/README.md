@@ -71,10 +71,7 @@ En revanche, les dimensions 1023 et 1025 évitent ces conflits systématiques, c
 
 ### Permutation des boucles
 
-```
-g++ -O3 -march=native -fopenmp -o TestProductMatrix.exe TestProductMatrix.cpp ProdMatMat.cpp Matrix.cpp
-./TestProductMatrix.exe 1024
-```
+`g++ -O3 -march=native -fopenmp -o TestProductMatrix.exe TestProductMatrix.cpp ProdMatMat.cpp Matrix.cpp;./TestProductMatrix.exe 1024`
 
 
   ordre           | time    | MFlops  | MFlops(n=2048)
@@ -110,18 +107,18 @@ Cette organisation minimise les défauts de cache et optimise l'utilisation des 
 
 ### OMP sur la meilleure boucle
 
-`make TestProduct.exe && OMP_NUM_THREADS=8 ./TestProduct.exe 1024`
+`g++ -O3 -march=native -fopenmp -o TestProductMatrix.exe TestProductMatrix.cpp ProdMatMat.cpp Matrix.cpp; $env:OMP_NUM_THREADS=8; ./TestProductMatrix.exe 4096`
 
-  OMP_NUM         | MFlops  | MFlops(n=2048) | MFlops(n=512)  | MFlops(n=4096)
-------------------|---------|----------------|----------------|---------------
-1                 |
-2                 |
-3                 |
-4                 |
-5                 |
-6                 |
-7                 |
-8                 |
+  OMP_NUM   | MFlops  | MFlops(n=2048) | MFlops(n=512)  | MFlops(n=4096)
+------------|---------|----------------|----------------|---------------
+1           | 517.824 |    416.504     |    1371.24     |   325.653
+2           | 1114.01 |    1052.23     |    3505.73     |   646.478
+3           | 1619.95 |    1614.19     |    3642.85     |   1106.15
+4           | 2218.43 |    1872.89     |    6390.79     |   1158.46
+5           | 3073.63 |    2680.15     |    8439.35     |   1769.36
+6           | 3660.71 |    3138.76     |    9405.82     |   1783.31
+7           | 3811.11 |    3593.81     |    10574.3     |   2118.57
+8           | 4531.77 |    3604.24     |    11008.4     |   1773.54    
 
 *Tracer les courbes de speedup (pour chaque valeur de n), discuter les résultats.*
 
@@ -131,15 +128,15 @@ Cette organisation minimise les défauts de cache et optimise l'utilisation des 
 
 `make TestProduct.exe && ./TestProduct.exe 1024`
 
-  szBlock         | MFlops  | MFlops(n=2048) | MFlops(n=512)  | MFlops(n=4096)
-------------------|---------|----------------|----------------|---------------
-origine (=max)    |
-32                |
-64                |
-128               |
-256               |
-512               |
-1024              |
+  szBlock      | MFlops  | MFlops(n=2048) | MFlops(n=512)  | MFlops(n=4096)
+---------------|---------|----------------|----------------|---------------
+origine(=2048) |         |                |                |
+32             |         |                |                |
+64             |         |                |                |
+128            |         |                |                |
+256            |         |                |                |
+512            |         |                |                |
+1024           |         |                |                |
 
 *Discuter les résultats.*
 
