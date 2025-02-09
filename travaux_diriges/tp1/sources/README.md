@@ -45,20 +45,6 @@ NUMA node0 CPU(s):                   0-3
 1024 (origine) | 212.4
 1025           | 825.117
 
-Pour mesurer le temps de calcul du produit matrice-matrice, j'ai effectué des tests avec trois dimensions différentes. Voici les résultats observés :
-
-Pour une matrice de dimension 1023 :
-- Temps d'exécution : 2,45 secondes
-- Performance : 873,185 MFlops
-
-Pour une matrice de dimension 1024 :
-- Temps d'exécution : 10,11 secondes
-- Performance : 212,4 MFlops
-
-Pour une matrice de dimension 1025 :
-- Temps d'exécution : 2,61 secondes
-- Performance : 825,117 MFlops
-
 L'analyse des résultats montre une anomalie significative pour la dimension 1024. Cette dimension, qui est une puissance de 2 (2¹⁰), présente un temps d'exécution environ quatre fois plus élevé que les dimensions adjacentes.
 
 Ce phénomène s'explique par le comportement du cache :
