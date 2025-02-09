@@ -120,8 +120,7 @@ Cette organisation minimise les défauts de cache et optimise l'utilisation des 
 7           | 3811.11 |    3593.81     |    10574.3     |   2118.57
 8           | 4531.77 |    3604.24     |    11008.4     |   1773.54    
 
-*Tracer les courbes de speedup (pour chaque valeur de n), discuter les résultats.*
-!(./TP1.png)
+!(TP1.png)
 
 
 ### Produit par blocs
