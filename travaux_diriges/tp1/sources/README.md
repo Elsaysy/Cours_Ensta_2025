@@ -126,8 +126,6 @@ La plus petite matrice (n=512) offre les meilleures performances en raison d'une
 
 ### Produit par blocs
 
-`make TestProduct.exe && ./TestProduct.exe 1024`
-
   szBlock      | MFlops  | MFlops(n=2048) | MFlops(n=512)  | MFlops(n=4096)
 ---------------|---------|----------------|----------------|---------------
 origine(=max)  | 7646.32 |    5666.75     |    14140.9     |    4476.68
@@ -138,7 +136,22 @@ origine(=max)  | 7646.32 |    5666.75     |    14140.9     |    4476.68
 512            | 9443.52 |    11462.4     |    14140.9     |    11876.3
 1024           | 7646.32 |    7952.49     |    14133.7     |    8251.09
 
-*Discuter les résultats.*
+Performance optimale :
+- Pour n=1024 : meilleure performance avec szBlock=128 (14432.1 MFlops)
+- Pour n=2048 : meilleure performance avec szBlock=256 (14124.8 MFlops)
+- Pour n=512 : meilleures performances avec szBlock=512 (14140.9 MFlops)
+- Pour n=4096 : meilleure performance avec szBlock=256 (12784.5 MFlops)
+
+Tendances observées :
+- Les petites tailles de blocs (32, 64) sont généralement moins performantes
+- Les très grandes tailles de blocs (1024) montrent aussi des performances réduites
+- La taille optimale des blocs varie selon la dimension de la matrice
+- Les blocs de taille intermédiaire (128-256) donnent généralement les meilleures performances
+
+Explications :
+- Les petits blocs : trop d'overhead de gestion des blocs
+- Les grands blocs : moins bonne utilisation du cache
+- Les blocs intermédiaires : bon compromis entre utilisation du cache et overhead de gestion
 
 
 
@@ -152,21 +165,29 @@ origine(=max)  | 7646.32 |    5666.75     |    14140.9     |    4476.68
 512            |  1      | 13080.3 |    11645.6     |    15207.5     |    13433.5    |
 512            |  8      | 29683.8 |    79526.7     |    14669.9     |    95307.6    |
 
-*Discuter les résultats.*
+Impact de la Taille des Blocs :
+- En mode mono-thread :
+  - Les blocs de taille 512 sont plus performants que ceux de 1024
+  - Pour n=1024 : 13080.3 MFlops (bloc 512) contre 8646.28 MFlops (bloc 1024)
+  - Meilleure utilisation du cache avec des blocs plus petits
+
+Parallélisation :
+- Avec 8 threads :
+  - Meilleures performances sur grandes matrices (n=2048, 4096)
+  - Pour n=4096 : accélération ~7.1x avec blocs de 512
+  - Accélération non linéaire due aux limitations de bande passante mémoire
+
+Impact de la Taille des Matrices :
+- Petites matrices (n=512) : accélération parallèle limitée
+- Grandes matrices (n≥2048) : meilleure mise à l'échelle
+- Meilleure amortissement des coûts de parallélisation
+
+Configuration Optimale :
+- Taille de bloc : 512
+- Nombre de threads : 8
+- Grandes matrices (n≥2048)
 
 
 ### Comparaison avec BLAS, Eigen et numpy
 
 *Comparer les performances avec un calcul similaire utilisant les bibliothèques d'algèbre linéaire BLAS, Eigen et/ou numpy.*
-
-
-# Tips
-
-```
-	env
-	OMP_NUM_THREADS=4 ./produitMatriceMatrice.exe
-```
-
-```
-    $ for i in $(seq 1 4); do elap=$(OMP_NUM_THREADS=$i ./TestProductOmp.exe|grep "Temps CPU"|cut -d " " -f 7); echo -e "$i\t$elap"; done > timers.out
-```
