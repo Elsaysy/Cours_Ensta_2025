@@ -157,7 +157,6 @@ Explications :
 
 ### Bloc + OMP
 
-
   szBlock      | OMP_NUM | MFlops  | MFlops(n=2048) | MFlops(n=512)  | MFlops(n=4096)|
 ---------------|---------|---------|----------------|----------------|---------------|
 1024           |  1      | 8646.28 |    10153.7     |    13526.3     |    8985.32    |
@@ -191,3 +190,10 @@ Configuration Optimale :
 ### Comparaison avec BLAS, Eigen et numpy
 
 *Comparer les performances avec un calcul similaire utilisant les bibliothèques d'algèbre linéaire BLAS, Eigen et/ou numpy.*
+
+| OMP_NUM | MFlops  | MFlops(n=2048) | MFlops(n=512)  | MFlops(n=4096)|
+|---------|---------|----------------|----------------|---------------|
+|  1      | 11816.9 |    14710.3     |    11392.7     |    12331.6    |
+|  8      | 57160.4 |    63741.1     |    48544.7     |    66754.8    |
+
+La bibliothèque BLAS offre de meilleures performances. Avec la stratégie Bloc + OMP, les performances fluctuent considérablement et sont plus sensibles à la taille des matrices. Pour les petites matrices comme n=512, l'accélération multi-thread n'est pas très significative. La bibliothèque BLAS, quant à elle, présente des performances relativement stables et maintient de bonnes performances pour différentes tailles de matrices.
