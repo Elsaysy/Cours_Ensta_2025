@@ -122,6 +122,21 @@ Cette organisation minimise les défauts de cache et optimise l'utilisation des 
 
 ![](TP1.png)
 
+Effets de l'accélération parallèle :
+- Une amélioration significative des performances avec l'augmentation du nombre de threads
+- Pour n=1024, nous observons une accélération superlinéaire (8.75x avec 8 threads)
+- L'efficacité du parallélisme est démontrée sur toutes les tailles de matrices
+
+Performance selon la taille des matrices :
+- Meilleure performance pour n=512 :
+  - 11008.4 MFlops avec 8 threads
+  - Excellent ratio cache/calcul
+- Performance décroissante avec l'augmentation de n :
+  - n=4096 montre les performances les plus faibles
+  - Seulement 1773.54 MFlops avec 8 threads
+  - Cette baisse est due aux limitations de la mémoire cache
+
+La plus petite matrice (n=512) offre les meilleures performances en raison d'une meilleure utilisation du cache, tandis que les grandes matrices souffrent des limitations de la bande passante mémoire.
 
 ### Produit par blocs
 
