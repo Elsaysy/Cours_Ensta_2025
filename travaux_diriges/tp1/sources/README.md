@@ -74,16 +74,16 @@ Pour l'ordre des boucles (j,k,i) dans la multiplication matricielle :
 
 La meilleure performance s'explique par l'accès optimal à la mémoire cache :
 
-1. La boucle interne sur i :
+La boucle interne sur i :
 - Accède aux éléments de C[i][j] en colonne
 - Accède aux éléments de A[i][k] en colonne
 - B[k][j] reste constant et peut être gardé en registre
 
-2. La boucle du milieu sur k :
+La boucle du milieu sur k :
 - Permet de réutiliser B[k][j] qui est déjà en cache
 - Change la colonne de A à chaque itération
 
-3. La boucle externe sur j :
+La boucle externe sur j :
 - Change la colonne de B et C
 - Maximise la réutilisation du cache
 
