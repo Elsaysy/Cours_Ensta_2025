@@ -2,7 +2,7 @@
 
 ##  1. Parallélisation ensemble de Mandelbrot
 1. `Mandelbrot-parallel.py`
-
+![](speedup_curve.png)
 Le temps d'exécution diminue avec l'augmentation du nombre de processus, mais cette réduction devient progressivement moins significative. Cette tendance démontre que la stratégie de parallélisation est particulièrement efficace avec un nombre limité de processus, mais présente des rendements décroissants au-delà d'un certain seuil.
 
 Théoriquement, l'accélération devrait être proportionnelle au nombre de processus. Cependant, nous observons que l'accélération réelle est inférieure aux valeurs théoriques et sa progression ralentit considérablement avec l'augmentation du nombre de processus. 
