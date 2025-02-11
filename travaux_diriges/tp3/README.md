@@ -1,11 +1,22 @@
 # TD n°3 - parallélisation du Bucket Sort
 
-*Ce TD peut être réalisé au choix, en C++ ou en Python*
+**Commande utilisée :**
+```
+mpiexec -n 4 python .\BucketSort.py
+```
+- `mpiexec` : Commande pour exécuter un programme en parallèle avec MPI
+- `-n 4` : Utilisation de 4 processus (donc 4 buckets)
 
-Implémenter l'algorithme "bucket sort" tel que décrit sur les deux dernières planches du cours n°3 :
+**Description de l'algorithme :**
+1. Le processus principal (rang 0) :
+   - Génère 100 nombres aléatoires entre 0 et 1000
+   - Divise ces nombres en 4 seaux selon leur valeur
+   - Distribue les données aux autres processus
 
-- le process 0 génère un tableau de nombres arbitraires,
-- il les dispatch aux autres process,
-- tous les process participent au tri en parallèle,
-- le tableau trié est rassemblé sur le process 0.
+2. Tous les processus :
+   - Reçoivent leur portion de données
+   - Trient localement leurs données
 
+3. Enfin :
+   - Les données triées sont renvoyées au processus principal
+   - Le processus principal rassemble et affiche le résultat final
