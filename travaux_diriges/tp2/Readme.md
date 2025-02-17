@@ -36,25 +36,25 @@ Dans le stratégie maître-esclave, le processus maître distribue dynamiquement
 
 ## 2. Produit matrice-vecteur
 
-On considère le produit d'une matrice carrée $A$ de dimension $N$ par un vecteur $u$ de même dimension dans $\mathbb{R}$. La matrice est constituée des cœfficients définis par $A_{ij} = (i+j) \mod N$. 
-
-Par soucis de simplification, on supposera $N$ divisible par le nombre de tâches `nbp` exécutées.
+$N = 4800$, $N_{loc} = N / nbp$
 
 ### a - Produit parallèle matrice-vecteur par colonne
 
-Afin de paralléliser le produit matrice–vecteur, on décide dans un premier temps de partitionner la matrice par un découpage par bloc de colonnes. Chaque tâche contiendra $N_{\textrm{loc}}$ colonnes de la matrice. 
-
-- Calculer en fonction du nombre de tâches la valeur de Nloc
-- Paralléliser le code séquentiel `matvec.py` en veillant à ce que chaque tâche n’assemble que la partie de la matrice utile à sa somme partielle du produit matrice-vecteur. On s’assurera que toutes les tâches à la fin du programme contiennent le vecteur résultat complet.
-- Calculer le speed-up obtenu avec une telle approche
+| nbp | Temps de calcul (s) | Speedup |
+| --- | ------------------- | ------- |
+| 1   | 9.8887              | 1       |
+| 2   | 5.0610              | 1.954   |
+| 3   | 3.4204              | 2.891   |
+| 4   | 2.5564              | 3.868   |
 
 ### b - Produit parallèle matrice-vecteur par ligne
 
-Afin de paralléliser le produit matrice–vecteur, on décide dans un deuxième temps de partitionner la matrice par un découpage par bloc de lignes. Chaque tâche contiendra $N_{\textrm{loc}}$ lignes de la matrice.
-
-- Calculer en fonction du nombre de tâches la valeur de Nloc
-- paralléliser le code séquentiel `matvec.py` en veillant à ce que chaque tâche n’assemble que la partie de la matrice utile à son produit matrice-vecteur partiel. On s’assurera que toutes les tâches à la fin du programme contiennent le vecteur résultat complet.
-- Calculer le speed-up obtenu avec une telle approche
+| nbp | Temps de calcul (s) | Speedup |
+| --- | ------------------- | ------- |
+| 1   | 10.8210             | 1       |
+| 2   | 4.1831              | 2.587   |
+| 3   | 2.8146              | 3.845   |
+| 4   | 2.0940              | 5.168   |
 
 ## 3. Entraînement pour l'examen écrit
 
