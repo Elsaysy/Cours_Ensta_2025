@@ -3,15 +3,36 @@
 ##  1. Parallélisation ensemble de Mandelbrot
 1. `Mandelbrot-parallel.py`
 
-![](speedup_curve.png)
+| nbp | Temps de calcul (s) | Speedup |
+| --- | ------------------- | ------- |
+| 1   | 3.5662658214569090  | 1       |
+| 2   | 1.5205612182617188  | 2.345   |
+| 4   | 0.9460878372192383  | 3.769   |
+| 8   | 0.7325904369354248  | 4.868   |
 
-Le temps d'exécution diminue avec l'augmentation du nombre de processus, mais cette réduction devient progressivement moins significative. Cette tendance démontre que la stratégie de parallélisation est particulièrement efficace avec un nombre limité de processus, mais présente des rendements décroissants au-delà d'un certain seuil.
+J'ai défini une liste de différents nombres de processus `nbp_list` pour les tests. Pour chaque nombre de processus, j'utilise `multiprocessing.Pool` pour calculer les lignes de l'image en parallèle. Après le calcul, les résultats sont rassemblés dans le tableau `convergence`. J'ai mesuré le temps d'exécution pour chaque nombre de processus et calculé l'accélération, qui montre une amélioration significative.
 
-Théoriquement, l'accélération devrait être proportionnelle au nombre de processus. Cependant, nous observons que l'accélération réelle est inférieure aux valeurs théoriques et sa progression ralentit considérablement avec l'augmentation du nombre de processus. 
+2. `Mandelbrot-improved-parallel.py`
 
-Cette diminution de la efficacité de parallélisation peut-être s'expliquer par les facteurs:
-- Les communications inter-processus (distribution des tâches et collecte des résultats) introduisent une surcharge significative
-- La charge de calcul peut varier considérablement d'une ligne à l'autre, créant un déséquilibre dans la répartition du travail
+| nbp | Temps de calcul (s) | Speedup |
+| --- | ------------------- | ------- |
+| 1   | 3.5584290027618410  | 1       |
+| 2   | 1.5909330844879150  | 2.237   |
+| 4   | 0.9227039813995361  | 3.857   |
+| 8   | 0.6993927955627441  | 5.088   |
+
+Chaque processus reçoit un ensemble de numéros de lignes distribuées par pas, ce qui permet d'obtenir un équilibrage de charge, car la complexité de calcul de l'ensemble de Mandelbrot est uniformément répartie entre les différentes lignes. On utilise `multiprocessing.Queue` pour renvoyer les résultats de calcul de chaque processus vers le processus principal. Le calcul de l'accélération montre une légère amélioration par rapport à la première solution.
+
+3. `Mandelbrot-maître-esclave.py`
+
+| nbp | Temps de calcul (s) | Speedup |
+| --- | ------------------- | ------- |
+| 1   | 3.4113667011260986  | 1       |
+| 2   | 1.5224745273590088  | 2.241   |
+| 4   | 0.9361574649810791  | 3.644   |
+| 8   | 0.6832985877990723  | 4.992   |
+
+Dans le stratégie maître-esclave, le processus maître distribue dynamiquement les tâches (numéros de lignes) aux processus esclaves. Les esclaves, après avoir terminé leur tâche, continuent à récupérer de nouvelles tâches de la file d'attente jusqu'à ce que celle-ci soit vide. Le processus maître collecte tous les résultats des processus esclaves depuis la file des résultats. Les résultats sont stockés dans le tableau `convergence` selon leur numéro de ligne. Une valeur sentinelle `None` est utilisée pour notifier aux processus esclaves que la file des tâches est vide et qu'ils peuvent terminer. Ce schéma de distribution dynamique donne une meilleure accélération que les deux approches précédentes.
 
 ## 2. Produit matrice-vecteur
 
