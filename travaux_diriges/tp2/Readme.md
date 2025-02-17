@@ -58,13 +58,26 @@ $N = 4800$, $N_{loc} = N / nbp$
 
 ## 3. Entraînement pour l'examen écrit
 
-Alice a parallélisé en partie un code sur machine à mémoire distribuée. Pour un jeu de données spécifiques, elle remarque que la partie qu’elle exécute en parallèle représente en temps de traitement 90% du temps d’exécution du programme en séquentiel.
+1. Calcul de l'accélération maximale selon la loi d'Amdahl:
 
-En utilisant la loi d’Amdhal, pouvez-vous prédire l’accélération maximale que pourra obtenir Alice avec son code (en considérant n ≫ 1) ?
+- La partie parallèle représente 90% du temps d'exécution, donc f = 0.1 (la fraction séquentielle)
+- La loi d'Amdahl nous donne: $S(n) = n/(1 + (n-1)f)$
+- Quand n tend vers l'infini, $S(\infty) = 1/f = 1/0.1 = 10$
 
-À votre avis, pour ce jeu de donné spécifique, quel nombre de nœuds de calcul semble-t-il raisonnable de prendre pour ne pas trop gaspiller de ressources CPU ?
+Donc l'accélération maximale théorique que pourra obtenir Alice est de 10.
 
-En effectuant son cacul sur son calculateur, Alice s’aperçoit qu’elle obtient une accélération maximale de quatre en augmentant le nombre de nœuds de calcul pour son jeu spécifique de données.
+2. Nombre raisonnable de nœuds:
 
-En doublant la quantité de donnée à traiter, et en supposant la complexité de l’algorithme parallèle linéaire, quelle accélération maximale peut espérer Alice en utilisant la loi de Gustafson ?
+- Pour n = 4: S(4) = 4/(1 + 3×0.1) = 4/1.3 ≈ 3.08
+- Pour n = 8: S(8) = 8/(1 + 7×0.1) = 8/1.7 ≈ 4.71
+- Pour n = 16: S(16) = 16/(1 + 15×0.1) = 16/2.5 = 6.4
 
+On constate que l'efficacité diminue rapidement. À partir de 8-10 nœuds, l'augmentation de l'accélération devient faible par rapport aux ressources utilisées. Un nombre raisonnable serait donc entre 8 et 10 nœuds.
+
+3. Accélération selon la loi de Gustafson avec double quantité de données:
+
+La loi de Gustafson nous donne: $S(n) = n + (1-n)×t_s$
+
+L'accélération attendue serait: $S(n) = n + (1-n)×0.1 = 0.9n + 0.1$
+
+Pour le même nombre de nœuds qui donnait une accélération de 4 précédemment, avec le double de données, on peut espérer une accélération proche de 8, car avec plus de données, la partie parallèle devient plus importante par rapport à la partie séquentielle.
